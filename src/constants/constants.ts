@@ -1,0 +1,1 @@
+export const CURRENT_BASE_URL = "https://localhost:7133/api/Employee";
