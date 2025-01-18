@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { ITodo } from "./core/domain/entity/Todo.entity";
-import { TodoContext } from "./core/application/context/TodoContext";
+import { TodoRepositoryContext } from "./core/application/context/TodoRepositoryContext";
 
 const App = () => {
-  const todoRepository = useContext(TodoContext);
+  const todoRepository = useContext(TodoRepositoryContext);
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [newTodoTitle, setNewTodoTitle] = useState<string>("");
 
