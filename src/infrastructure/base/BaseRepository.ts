@@ -8,8 +8,8 @@ import { HttpClient } from "../http/HttpClient";
   delete(id: string): Promise<ApiResponse<T>>;
 }
 
-export class ApiResponse<ITodo> {
-  data?: ITodo;
+export class ApiResponse<T> {
+  data?: T;
   succeeded?: boolean;
   errors?: any;
 }

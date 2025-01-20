@@ -4,7 +4,7 @@ import { BaseRepository } from "../base/BaseRepository";
 class TodoRepository extends BaseRepository<ITodo> {
   constructor() {
     super();
-    this.collection = "";
+    this.collection = "Student";
   }
 
   getTodoById(id: string) {

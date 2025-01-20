@@ -1,4 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import AddStudentForm from './components/form/AddStudentForm'
+
+const App = () => {
+  return (
+    <div className="flex items-center justify-center min-h-screen min-w-screen">
+    <AddStudentForm/>
+    </div>
+  )
+}
+
+export default App
+
+/*import { useContext, useEffect, useState } from "react";
 import { ITodo } from "./core/domain/entity/Todo.entity";
 import { TodoRepositoryContext } from "./core/application/context/TodoRepositoryContext";
 
@@ -98,7 +110,7 @@ const App = () => {
         color: "white",
       }}
     >
-      {/* To-Do List Section */}
+       
       <div
         style={{
           flex: 1,
@@ -158,7 +170,7 @@ const App = () => {
         )}
       </div>
 
-      {/* Add To-Do Section */}
+     
       <div
         style={{
           position: "fixed",
@@ -203,3 +215,4 @@ const App = () => {
 };
 
 export default App;
+*/
