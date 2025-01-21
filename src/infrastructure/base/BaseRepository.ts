@@ -16,7 +16,7 @@ export class ApiResponse<T> {
 
 const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
   return Promise.resolve({
-    data: response.data.data,
+    data: response.data,
     succeeded: response.status === 200?true:false,
     errors: response.data?.errors || null,
   });

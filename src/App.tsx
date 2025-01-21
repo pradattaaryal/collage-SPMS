@@ -1,218 +1,42 @@
-import AddStudentForm from './components/form/AddStudentForm'
-
-const App = () => {
-  return (
-    <div className="flex items-center justify-center min-h-screen min-w-screen">
-    <AddStudentForm/>
-    </div>
-  )
-}
-
-export default App
-
-/*import { useContext, useEffect, useState } from "react";
-import { ITodo } from "./core/domain/entity/Todo.entity";
-import { TodoRepositoryContext } from "./core/application/context/TodoRepositoryContext";
-
-const App = () => {
-  const todoRepository = useContext(TodoRepositoryContext);
-  const [todos, setTodos] = useState<ITodo[]>([]);
-  const [newTodoTitle, setNewTodoTitle] = useState<string>("");
-
-  // Fetch To-Do items
-  const fetchTodos = async () => {
-    try {
-      if (!todoRepository) return;
-  
-      const response = await todoRepository.getAllTodos();
-      if (response.succeeded && response.data) {
-        setTodos(response.data.slice(0, 10)); // Access the nested `data` array
-      }
-    } catch (error) {
-      console.error("Failed to fetch To-Dos:", error);
-    }
-  };
-  
-
-  useEffect(() => {
-    fetchTodos();
-  }, [todoRepository]);
-
+import { Route, Routes } from "react-router-dom";
+import React, { Suspense } from "react";
+import AddStudentForm from "./presentation/components/form/AddStudentForm";
  
-  const handleAddTodo = async () => {
-    if (!todoRepository || !newTodoTitle.trim()) return;
-  
-    try {
-      const newTodo = {
-        id: "0", // You may need to adjust this if the API generates the ID automatically
-        title: newTodoTitle,
-        completed: true, // Set it to false unless the todo is marked as complete on creation
-      };
-  
-      await todoRepository.create(newTodo);
-      setNewTodoTitle(""); // Clear input
-      await fetchTodos(); // Refresh the list to include the new To-Do
-       
-    } catch (error: any) {
-      console.error("Error adding To-Do:", error.response?.data || error.message);
-      alert(
-        error.response?.data?.message || "Something went wrong. Please try again."
-      );
-    }
-  };
-  
-  
+// Lazy Loading Components
+const Login = React.lazy(() => import("./presentation/pages/LoginPage/LoginPage"));
+const AdminPage = React.lazy(() => import("./presentation/pages/AdminPage/AdminPage"));
+const ManageUser = React.lazy(() => import("./presentation/components/AdminPage/ManageUser"));
+const UserDetail = React.lazy(() => import("./presentation/components/AdminPage/UserDetail"));
 
-  // Update a To-Do
-  const handleUpdateTodo = async (id: string, completed: boolean) => {
-    if (!todoRepository) return;
-
-    try {
-      const updatedTodo = todos.find((todo) => todo.id === id);
-      if (!updatedTodo) return;
-
-      const response = await todoRepository.update(id, {
-        ...updatedTodo,
-        completed: !completed,
-      });
-
-      if (response.succeeded) {
-        await fetchTodos(); // Refresh list
-      }
-    } catch (error) {
-      console.error("Error updating To-Do:", error);
-    }
-  };
-
-  // Delete a To-Do
-  const handleDeleteTodo = async (id: string) => {
-    if (!todoRepository) return;
-
-    try {
-      const response = await todoRepository.delete(id);
-
-      if (response.succeeded) {
-        await fetchTodos(); // Refresh list
-      }
-    } catch (error) {
-      console.error("Error deleting To-Do:", error);
-    }
-  };
-
+function App() {
   return (
-    <div
-      style={{
-        background: "#2D3E4F",
-        minHeight: "100vh",
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column",
-        color: "white",
-      }}
-    >
-       
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "20px",
-        }}
-      >
-        <h1 style={{ textAlign: "center" }}>To-Do List</h1>
-        {todos.length > 0 ? (
-          todos.map((todo) => (
-            <div
-              key={todo.id}
-              style={{
-                marginBottom: "15px",
-                padding: "10px",
-                background: "#3E505C",
-                borderRadius: "8px",
-              }}
-            >
-              <p>
-                <strong>ID:</strong> {todo.id}
-              </p>
-              <p>
-                <strong>Title:</strong> {todo.title}
-              </p>
-              <p>
-                <strong>Completed:</strong>{" "}
-                <button
-                  style={{
-                    padding: "5px 10px",
-                    borderRadius: "5px",
-                    border: "none",
-                    background: todo.completed ? "#28A745" : "#DC3545",
-                    color: "white",
-                  }}
-                  onClick={() => handleUpdateTodo(todo.id, todo.completed)}
-                >
-                  {todo.completed ? "Yes" : "No"}
-                </button>
-              </p>
-              <button
-                style={{
-                  padding: "5px 10px",
-                  borderRadius: "5px",
-                  border: "none",
-                  background: "#DC3545",
-                  color: "white",
-                }}
-                onClick={() => handleDeleteTodo(todo.id)}
-              >
-                Delete
-              </button>
-            </div>
-          ))
-        ) : (
-          <p style={{ textAlign: "center" }}>No To-Do items yet. Add one!</p>
-        )}
-      </div>
+    <div className="flex flex-col  w-full   max-h-screen ">
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          {/* Login Route */}
+          <Route path="/" element={ <Login/>} />
+          <Route path="/d" element={<AddStudentForm/>} />
 
-     
-      <div
-        style={{
-          position: "fixed",
-          bottom: 0,
-          width: "100%",
-          background: "#1E2A36",
-          padding: "20px",
-          boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Enter To-Do Title"
-          value={newTodoTitle}
-          onChange={(e) => setNewTodoTitle(e.target.value)}
-          style={{
-            width: "70%",
-            padding: "10px",
-            fontSize: "16px",
-            marginRight: "10px",
-          }}
-        />
-        <button
-          onClick={handleAddTodo}
-          style={{
-            width: "25%",
-            padding: "10px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            color: "#FFFFFF",
-            background: "#007BFF",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Add To-Do
-        </button>
-      </div>
+
+          
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminPage />}>
+            <Route index element={<ManageUser />} /> {/* Default child route */}
+            <Route path="manageuser" element={<ManageUser />} />
+            <Route path="manageuser/adduser" element={<AddStudentForm />} />
+            <Route path="/admin/user/:id" element={<UserDetail />} />
+          </Route>
+
+          {/* User Details (Standalone Route) */}
+          
+
+          {/* Fallback for undefined routes */}
+          <Route path="*" element={<div>404 - Page Not Found</div>} />
+        </Routes>
+      </Suspense>
     </div>
   );
-};
+}
 
 export default App;
-*/

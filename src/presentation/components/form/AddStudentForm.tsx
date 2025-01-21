@@ -1,9 +1,9 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { useState, useRef, useContext } from "react";
-import { StudentRepositoryContext } from "../../core/application/context/StudentRepositoryContext";
-import { Student } from "../../core/domain/entity/Student.entity";
-import { SEMESTERS, GENDERS, FACULTY } from "../../constants/constants";
+import { StudentRepositoryContext } from "../../../core/application/context/StudentRepositoryContext";
+import { Student } from "../../../core/domain/entity/Student.entity";
+import { SEMESTERS, GENDERS, FACULTY } from "../../../constants/constants";
 import vector from '../../assets/image/Vector.png'
 export default function AddStudentForm() {
   const { register, handleSubmit, reset } = useForm<Student>();

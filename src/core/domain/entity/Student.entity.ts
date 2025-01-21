@@ -1,14 +1,14 @@
 export interface Student {
-    name: string;
-    fatherName: string;
-    motherName: string;
-    gender: string;
-    dob: string;
-    email: string;
-    password: string;
-    faculty: string;
-    semester: string;
-    phoneNo: string;
-    imageUrl?: File;
-  }
-  
+  id: number;
+  name: string;
+  fatherName: string;
+  motherName: string;
+  gender: string;
+  email: string;
+  phoneNo: string;
+  imageUrl?: string;
+  dob?: string; // Optional if not always provided
+  faculty?: string; // Optional
+  semester?: string; // Optional
+  password?:string;
+}
