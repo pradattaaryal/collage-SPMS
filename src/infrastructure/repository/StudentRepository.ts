@@ -13,6 +13,9 @@ class StudentRepository extends BaseRepository<Student> {
   GetAllStudent() {
     return super.getMany();
   }
+  getStudentDateById(id:string){
+    return super.get(id)
+  }
 }
 
 export default StudentRepository;

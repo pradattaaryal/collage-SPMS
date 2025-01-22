@@ -23,7 +23,7 @@ function App() {
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminPage />}>
             <Route index element={<ManageUser />} /> {/* Default child route */}
-            <Route path="manageuser" element={<ManageUser />} />
+            <Route path="manageuser" element={<ManageUser/>} />
             <Route path="manageuser/adduser" element={<AddStudentForm />} />
             <Route path="/admin/user/:id" element={<UserDetail />} />
           </Route>

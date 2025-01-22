@@ -9,8 +9,7 @@ import Pagination from "../../ui/Pagination";
 import AddStudentForm from "../form/AddStudentForm";
 import { StudentRepositoryContext } from "../../../core/application/context/StudentRepositoryContext";
 import { Student } from "../../../core/domain/entity/Student.entity";
-
-interface UserTableProps {
+ interface UserTableProps {
   onUserHover: (user: Student) => void;
 }
 
@@ -20,10 +19,14 @@ interface StudentFormData {
   semester: string;
 }
 
+
+
+
+
+
 const UserTable: React.FC<UserTableProps> = ({ onUserHover }) => {
   const [users, setUsers] = useState<Student[]>([]);
-
-  const {
+   const {
     register,
     handleSubmit,
     setValue,
@@ -91,9 +94,11 @@ const UserTable: React.FC<UserTableProps> = ({ onUserHover }) => {
     setItemsPerPage(size);
     setCurrentPage(1); // Reset to first page when page size changes
   };
-
+  /*useEffect(() => {
+    setUsers(students)
+    ,[]})*/
   const StudentRepository = useContext(StudentRepositoryContext);
-  useEffect(() => {
+ useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await StudentRepository?.GetAllStudent();
@@ -114,12 +119,13 @@ const UserTable: React.FC<UserTableProps> = ({ onUserHover }) => {
           alert("Failed to fetch students");
         }
       } catch (error) {
+        
         alert("An error occurred while fetching data");
       }
     };
     fetchData();
   }, [StudentRepository]);
-
+ 
   return (
     <div className="shadow-md h-[690px]    rounded p-4">
       {/* Filters and Buttons */}
@@ -219,7 +225,9 @@ const UserTable: React.FC<UserTableProps> = ({ onUserHover }) => {
       <div className=" overflow-auto scrollbar-none  h-[450px]  ">
         <table className="table-auto w-full border-collapse">
           <thead className=" sticky top-0 ">
-            <tr className="bg-gray-200 text-left align-middle rounded-t-xl    ">
+            <tr 
+             
+            className="bg-gray-200 text-left align-middle rounded-t-xl    ">
               <th className="p-2 border-b  rounded-tl-lg text-center ">
                 {" "}
                 <input type="checkbox" />{" "}

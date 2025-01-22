@@ -3,6 +3,7 @@ import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Student } from "../../core/domain/entity/Student.entity";
 import { CURRENT_BASE_URL_image } from "../../constants/constants";
+import { useNavigate } from "react-router-dom";
 interface UserRowProps {
   user: Student;
   isSelected: boolean;
@@ -16,11 +17,14 @@ const UserRow: React.FC<UserRowProps> = ({
   onHover,
   onSelectRow,
 }) => {
+
+  const navigate = useNavigate();
+
   return (
     <tr
       className="hover:bg-gray-100 cursor-pointer"
       onMouseEnter={() => onHover(user)}
-       
+      onClick={() => navigate(`/admin/user/${user.id}`)}
     >
       <td className="p-2 border-b text-center">
         <input type="checkbox" checked={isSelected} onChange={onSelectRow} />
