@@ -4,6 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { Student } from "../../core/domain/entity/Student.entity";
 import { CURRENT_BASE_URL_image } from "../../constants/constants";
 import { useNavigate } from "react-router-dom";
+ 
 interface UserRowProps {
   user: Student;
   isSelected: boolean;
@@ -29,6 +30,7 @@ const UserRow: React.FC<UserRowProps> = ({
       <td className="p-2 border-b text-center">
         <input type="checkbox" checked={isSelected} onChange={onSelectRow} />
       </td>
+    
       <td className="border-b text-center  ">
         <img
           src={`${CURRENT_BASE_URL_image}/` + `${user.imageUrl}`}

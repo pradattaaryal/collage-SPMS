@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import React, { Suspense } from "react";
 import AddStudentForm from "./presentation/components/form/AddStudentForm";
+import AddNotice from "./presentation/components/AdminPage/AddNotice";
  
 // Lazy Loading Components
 const Login = React.lazy(() => import("./presentation/pages/LoginPage/LoginPage"));
@@ -10,7 +11,7 @@ const UserDetail = React.lazy(() => import("./presentation/components/AdminPage/
 
 function App() {
   return (
-    <div className="flex flex-col  w-full   max-h-screen ">
+    <div className="flex flex-col  ">
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {/* Login Route */}
@@ -25,6 +26,7 @@ function App() {
             <Route index element={<ManageUser />} /> {/* Default child route */}
             <Route path="manageuser" element={<ManageUser/>} />
             <Route path="manageuser/adduser" element={<AddStudentForm />} />
+            <Route path="notice" element={<AddNotice />} />
             <Route path="/admin/user/:id" element={<UserDetail />} />
           </Route>
 

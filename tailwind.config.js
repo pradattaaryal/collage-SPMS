@@ -24,9 +24,9 @@ export default {
 
       },
       fontWeight: {
-        bold: '700',
-        medium:'500',
-        regular:'400'
+        boldd: '700',
+        mediumm:'500',
+        regularr:'400'
 
       },
       colors: {

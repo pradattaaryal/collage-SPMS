@@ -4,6 +4,10 @@ export const SEMESTERS = ["1", "2", "3", "4","5","6","7","8"];
 export const GENDERS = ["Male","Female","Others"];
 export const FACULTY = ["BIM","BCA","BBS","MBA"];
 export const ORDER = ["ASC","DES"];
+export interface CardRowProps {
+  data: CardData[];
+}
+
 export const courseData = [
     {
       name: "BIM",
@@ -26,4 +30,61 @@ export const courseData = [
       years: Array.from({ length: 12 }, (_, index) => `${2070 + index}`), // 2070 to 2081
     },
   ];
-  
+  export const dummyData = [
+    {
+      id: 1,
+      image: "https://via.placeholder.com/230", // Placeholder image
+      title: "Deputy Minuting Manager",
+      skills: "Leadership, Teamwork",
+      year: "2081/82",
+      club: "IT Club",
+    },
+    {
+      id: 2,
+      image: "https://via.placeholder.com/230", // Placeholder image
+      title: "Deputy Minuting Manager",
+      skills: "Leadership, Teamwork",
+      year: "2081/82",
+      club: "IT Club",
+    },
+    {
+      id: 3,
+      image: "https://via.placeholder.com/230", // Placeholder image
+      title: "Deputy Minuting Manager",
+      skills: "Leadership, Teamwork",
+      year: "2081/82",
+      club: "IT Club",
+    },
+    {
+      id: 3,
+      image: "https://via.placeholder.com/230", // Placeholder image
+      title: "Deputy Minuting Manager",
+      skills: "Leadership, Teamwork",
+      year: "2081/82",
+      club: "IT Club",
+    }, {
+      id: 3,
+      image: "https://via.placeholder.com/230", // Placeholder image
+      title: "Deputy Minuting Manager",
+      skills: "Leadership, Teamwork",
+      year: "2081/82",
+      club: "IT Club",
+    }, {
+      id: 3,
+      image: "https://via.placeholder.com/230", // Placeholder image
+      title: "Deputy Minuting Manager",
+      skills: "Leadership, Teamwork",
+      year: "2081/82",
+      club: "IT Club",
+    },
+    
+  ];
+   
+ export interface CardData {
+  id: number;
+  image: string;
+  title: string;
+  skills: string;
+  year: string;
+  club: string;
+}

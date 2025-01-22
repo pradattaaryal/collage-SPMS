@@ -5,7 +5,7 @@ import { CURRENT_BASE_URL_image } from "../../../constants/constants";
 
 
 interface UserDetailsProps {
-  user: Student;
+  user: Student|null;
 }
 
 const HoverUserDetails: React.FC<UserDetailsProps> = ({ user }) => {

@@ -2,12 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Student } from "../../../core/domain/entity/Student.entity";
 import { StudentRepositoryContext } from "../../../core/application/context/StudentRepositoryContext";
-import {CURRENT_BASE_URL_image} from '../../../constants/constants'
+import { CURRENT_BASE_URL_image, dummyData, CardData } from "../../../constants/constants";
+import CardRow from "../../ui/CardRow";
+
 const UserDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const StudentRepository = useContext(StudentRepositoryContext);
-  const [activeTab, setActiveTab] = useState("academic");
-  const [user, setUser] = useState<Student | null>(null); // Change this line  const [activeTab, setActiveTab] = useState("academic");
+  const [carddata, setcarddata] = useState<CardData[] | null>(null);
+  const [activeTab, setActiveTab] = useState("cca");
+  const [user, setUser] = useState<Student | null>(null);
+
   const transformStudentData = (data: any): Student => ({
     id: data.Id,
     name: data.Name,
@@ -17,30 +21,32 @@ const UserDetailPage: React.FC = () => {
     email: data.Email,
     phoneNo: data.PhoneNo,
     imageUrl: data.ImageUrl,
-    faculty:data.Faculty,
-    semester:data.Semester,
-    dob:data.DoB,
+    faculty: data.Faculty,
+    semester: data.Semester,
+    dob: data.DoB,
   });
-  useEffect(() => {
-  const fetchData = async () => {
-    try {
-      if (id) {
-        const fetchedUser = await StudentRepository?.getStudentDateById(id);
-        if (fetchedUser?.succeeded && fetchedUser?.data) {
-          const formattedData = transformStudentData(fetchedUser.data); // Change this to a single object, not an array
-          setUser(formattedData);
-          console.log(formattedData);
-        } else {
-          console.error("Failed to fetch user data or invalid response:", fetchedUser);
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
 
-  fetchData();
-}, [id, StudentRepository]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (id) {
+          const fetchedUser = await StudentRepository?.getStudentDateById(id);
+          if (fetchedUser?.succeeded && fetchedUser?.data) {
+            const formattedData = transformStudentData(fetchedUser.data);
+            setUser(formattedData);
+            setcarddata(dummyData);
+            console.log(formattedData);
+          } else {
+            console.error("Failed to fetch user data or invalid response:", fetchedUser);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id, StudentRepository]);
 
   if (!user) {
     return <p>User not found!</p>;
@@ -56,11 +62,6 @@ const UserDetailPage: React.FC = () => {
     scholarship: "Gold",
   };
 
-  const ccaData = {
-    activities: "Debate, Music Club, Football Team",
-    awards: "Best Debater 2021",
-  };
-
   const projectsData = [
     { title: "E-commerce Website", year: 2021 },
     { title: "Library Management System", year: 2022 },
@@ -74,19 +75,18 @@ const UserDetailPage: React.FC = () => {
   const linkedInProfile = "https://linkedin.com/in/user-profile";
 
   return (
-    <div className="p-8 bg-white h-[80%] border-2 rounded-xl shadow-2xl min-h-screen">
+    <div className="md:h-[700px]  flex flex-col border-2 h-screen  rounded-xl shadow-2xl">
       {/* User Info */}
-      <div className="flex items-center bg-white shadow-md p-6 rounded-md mb-6">
+      <div className="flex items-center bg-background shadow-md p-6 rounded-md mb-6">
         <img
-          src={`${CURRENT_BASE_URL_image}/` + `${user.imageUrl}`}
-          
+          src={`${CURRENT_BASE_URL_image}/${user.imageUrl}`}
           alt={user.name}
-          className="rounded-full h-32 w-32 mr-8"
+          className="rounded-md border-2 border-black h-36 w-36 mr-8"
         />
         <div>
-          <h2 className="text-xl font-bold">{user.name}</h2>
-          <p>
-            <strong>Email:</strong> {user.email}
+          <h2 className=" sm:text-base md:text-lg lg:text-xl font-bold">{user.name}</h2>
+          <p >
+            <strong className="md:text-custom-18  sm:text-[20px] text-[15px]">Email:</strong> {user.email}
           </p>
           <p>
             <strong>Phone:</strong> {user.phoneNo}
@@ -101,14 +101,14 @@ const UserDetailPage: React.FC = () => {
       </div>
 
       {/* Tab Navigation */}
-      <div className="bg-red-500 shadow-md rounded-md">
-        <div className="flex justify-center items-center rounded-t-md bg-background border-b">
+      <div className="h-[580px] shado w-md rounded-md overflow-hidden">
+        <div className="sticky top-0   flex justify-center items-center border-b z-10">
           {["academic", "cca", "projects", "certifications", "linkedin"].map(
             (tab, index, allTabs) => (
               <button
                 key={tab}
-                className={`px-[48px] py-[20px] w-full text-center transition-all duration-100 ${
-                  activeTab === tab ? "bg-primary text-white" : "text-primary"
+                className={`px-2 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 xl:px-12 xl:py-6   border-2 border-b-primary w-full text-center transition-all duration-100 ${
+                  activeTab === tab ? "bg-primary  text-white" : "text-primary"
                 } ${index === 0 ? "rounded-tl-md" : ""} ${
                   index === allTabs.length - 1 ? "rounded-tr-md" : ""
                 }`}
@@ -120,67 +120,64 @@ const UserDetailPage: React.FC = () => {
           )}
         </div>
 
-        {/* Tab Content */}
-        <div className="mt-4">
-          {activeTab === "academic" && (
-            <div>
-              <h3 className="font-bold mb-2">Academic Details</h3>
-              <p>Section: {academicData.course}</p>
-              <p>GPA: {academicData.gpa}</p>
-              <p>Joined: {academicData.joined}</p>
-              <p>Ended: {academicData.ended}</p>
-              <p>Semester: {academicData.semester}</p>
-              <p>Scholarship: {academicData.scholarship}</p>
-            </div>
-          )}
+        <div className="h-[100%]   overflow-auto  scrollbar-none">
+          <div
+            className={
+              activeTab === "academic"
+                ? "flex flex-col justify-around p-6 text-custom-28"
+                : "hidden"
+            }
+          >
+            <h3 className="font-bold mb-2">Academic Details</h3>
+            <p>Section: {academicData.course}</p>
+            <p>GPA: {academicData.gpa}</p>
+            <p>Joined: {academicData.joined}</p>
+            <p>Ended: {academicData.ended}</p>
+            <p>Semester: {academicData.semester}</p>
+            <p>Scholarship: {academicData.scholarship}</p>
+          </div>
 
-          {activeTab === "cca" && (
-            <div>
-              <h3 className="font-bold mb-2">CCA/ECA Activities</h3>
-              <p>Activities: {ccaData.activities}</p>
-              <p>Awards: {ccaData.awards}</p>
-            </div>
-          )}
+          <button className=" absolute right-[50px] mt-6 rounded-lg px-4 shadow-black shadow-2xl  hover:bg-hover text-custom-36 bg-primary "><p>+</p></button>
 
-          {activeTab === "projects" && (
-            <div>
-              <h3 className="font-bold mb-2">Projects</h3>
-              <ul>
-                {projectsData.map((project, index) => (
-                  <li key={index}>
-                    {project.title} ({project.year})
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <div className={activeTab === "cca" ? "flex   p-2   " : "hidden"}>
+            <CardRow data={carddata || []} />
+          </div>
 
-          {activeTab === "certifications" && (
-            <div>
-              <h3 className="font-bold mb-2">Certifications</h3>
-              <ul>
-                {certificationsData.map((certification, index) => (
-                  <li key={index}>
-                    {certification.name} ({certification.year}) from{" "}
-                    {certification.issuer}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <div
+            className={activeTab === "projects" ? "bg-red-400" : "hidden"}
+          >
+            <h3 className="font-bold mb-2">Projects</h3>
+            <ul>
+              {projectsData.map((project, index) => (
+                <li key={index}>
+                  {project.title} ({project.year})
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          {activeTab === "linkedin" && (
-            <div>
-              <h3 className="font-bold mb-2">LinkedIn Profile</h3>
-              <a
-                href={linkedInProfile}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View LinkedIn Profile
-              </a>
-            </div>
-          )}
+          <div
+            className={activeTab === "certifications" ? "bg-red-400" : "hidden"}
+          >
+            <h3 className="font-bold mb-2">Certifications</h3>
+            <ul>
+              {certificationsData.map((certification, index) => (
+                <li key={index}>
+                  {certification.name} ({certification.year}) from{" "}
+                  {certification.issuer}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div
+            className={activeTab === "linkedin" ? "bg-red-400" : "hidden"}
+          >
+            <h3 className="font-bold mb-2">LinkedIn Profile</h3>
+            <a href={linkedInProfile} target="_blank" rel="noopener noreferrer">
+              View LinkedIn Profile
+            </a>
+          </div>
         </div>
       </div>
     </div>
