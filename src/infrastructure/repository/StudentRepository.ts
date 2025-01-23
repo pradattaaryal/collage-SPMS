@@ -10,11 +10,14 @@ class StudentRepository extends BaseRepository<Student> {
   registerStudent(formData: any) {
     return super.create(formData);
   }
-  GetAllStudent() {
+  GetAll() {
     return super.getMany();
   }
   getStudentDateById(id:string){
     return super.get(id)
+  }
+  deletestudents(id:string){
+    return super.delete(id)
   }
 }
 

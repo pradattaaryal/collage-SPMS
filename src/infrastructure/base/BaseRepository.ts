@@ -15,8 +15,9 @@ export class ApiResponse<T> {
 }
 
 const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
+  const isPaginated = response.data?.TotalCount !== undefined && response.data?.Students !== undefined;
   return Promise.resolve({
-    data: response.data,
+    data: isPaginated ? response.data.Students : response.data,
     succeeded: response.status === 200?true:false,
     errors: response.data?.errors || null,
   });
@@ -47,6 +48,6 @@ export abstract class BaseRepository<T> extends HttpClient implements IBaseRepos
 
   async delete(id: string): Promise<ApiResponse<T>> {
     const instance = this.createInstance();
-    return instance.delete(`${this.collection}/${id}`).then(transform);
+    return instance.delete(`${this.collection}/Delete/${id}`).then(transform);
   }
 }
