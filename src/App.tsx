@@ -30,10 +30,7 @@ function App() {
             <Route path="/admin/user/:id" element={<UserDetail />} />
           </Route>
 
-          {/* User Details (Standalone Route) */}
-          
-
-          {/* Fallback for undefined routes */}
+ 
           <Route path="*" element={<div>404 - Page Not Found</div>} />
         </Routes>
       </Suspense>

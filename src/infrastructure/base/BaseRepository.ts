@@ -15,10 +15,10 @@ export class ApiResponse<T> {
 }
 
 const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
-  const isPaginated = response.data?.TotalCount !== undefined && response.data?.Students !== undefined;
+  const isPaginated = response.data?.TotalCount!== undefined && response.data?.Data !== undefined;
   return Promise.resolve({
-    data: isPaginated ? response.data.Students : response.data,
-    succeeded: response.status === 200?true:false,
+    data: isPaginated ? response.data.Data : response.data,
+    succeeded:  true ,
     errors: response.data?.errors || null,
   });
 };

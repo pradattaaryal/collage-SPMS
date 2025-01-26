@@ -292,7 +292,7 @@ const UserTable: React.FC<UserTableProps> = ({ onUserHover }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [userstate, setuserstate] = useState("Student");
+  const [userstate, setuserstate] = useState("Teacher");
 
   const {
     register,
@@ -394,12 +394,7 @@ const UserTable: React.FC<UserTableProps> = ({ onUserHover }) => {
   };
 
   useEffect(() => {
-    // Add guard to prevent calling `fetchUsers` if repositories are not available
-    if ((userstate === "Student" && !StudentRepository) || (userstate === "Teacher" && !TeacherRepository)) {
-      console.warn("Repository is not initialized for the current userstate.");
-      return;
-    }
-
+ 
     fetchUsers();
     // Dependencies ensure the function is triggered when `userstate`, `StudentRepository`, or `TeacherRepository` changes
   }, [userstate, StudentRepository, TeacherRepository]);
@@ -416,8 +411,8 @@ const UserTable: React.FC<UserTableProps> = ({ onUserHover }) => {
           onChange={handleUserStateChange}
           className="p-2 h-[48px] w-[120px] border-2 border-background rounded"
         >
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
+          <option value="Student">Student</option>
+          <option value="Teacher">Teacher</option>
         </select>
 
          <div className="flex items-center w-full border-2 border-black rounded-3xl px-4 h-[52px]">

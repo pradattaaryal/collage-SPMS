@@ -4,7 +4,7 @@
  class TeacherRepository extends BaseRepository<Teacher> {
    constructor() {
      super();
-     this.collection = "Teacher";
+     this.collection = "teacher";
    }
  
    registerTeacher(formData: any) {
